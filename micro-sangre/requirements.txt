@@ -1,0 +1,24 @@
+# --- Framework de la API ---
+fastapi
+uvicorn
+python-multipart
+
+# --- Procesamiento de Imágenes y Datos ---
+numpy
+pillow
+opencv-python-headless
+pandas
+
+# --- Inteligencia Artificial (Cellpose) ---
+cellpose==4.0.9
+torch
+torchvision
+torchaudio
+
+# --- Análisis y Clustering (DBSCAN) ---
+scikit-learn==1.7.2
+scikit-image
+scipy
+
+# --- Utilidades ---
+requests

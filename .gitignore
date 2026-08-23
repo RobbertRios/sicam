@@ -1,0 +1,73 @@
+# ============================
+# Datos generados / no versionables (mismo criterio que .dockerignore)
+# ============================
+backend/media/
+backend/muestras/
+backend/mascaras/
+**/media/
+**/muestras/
+**/mascaras/
+
+# ============================
+# Python
+# ============================
+**/__pycache__/
+*.pyc
+*.pyo
+venv/
+env/
+.venv/
+*.egg-info/
+.pytest_cache/
+
+# ============================
+# Node / Vue
+# ============================
+node_modules/
+dist/
+.vite/
+*.local
+
+# ============================
+# Bases de datos y datos pesados
+# ============================
+*.sqlite3
+db.sqlite3
+*.npy
+*.npz
+**/db-data/
+
+# ============================
+# Modelos de Cellpose / pesos preentrenados
+# (cyto3 se descarga solo, no debe ir al repo)
+# ============================
+**/models/*.pth
+**/.cellpose/
+**/checkpoints/
+
+# ============================
+# Variables de entorno y secretos
+# ============================
+.env
+.env.*
+!.env.example
+
+# ============================
+# Git / Docker (por si acaso)
+# ============================
+.git/
+*.log
+
+# ============================
+# IDE / OS
+# ============================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ============================
+# Django
+# ============================
+staticfiles/
+*.sqlite3-journal

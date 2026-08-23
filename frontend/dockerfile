@@ -1,0 +1,20 @@
+# Usamos Node 20 Alpine para mayor ligereza y compatibilidad
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copiamos archivos de dependencias para aprovechar el cache
+COPY package*.json ./
+
+# Instalamos las dependencias (incluyendo axios y html2pdf.js)
+RUN npm install
+
+# Copiamos el resto del código del frontend
+COPY . .
+
+# Exponemos el puerto de Vite
+EXPOSE 5173
+
+# Comando para desarrollo. 
+# El flag --host es CRUCIAL para que Docker Desktop pueda mostrarte el sitio en Windows
+CMD ["npm", "run", "dev", "--", "--host"]

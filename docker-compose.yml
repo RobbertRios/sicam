@@ -1,0 +1,71 @@
+services:
+  # Base de Datos PostgreSQL 18
+  db:
+    image: postgres:18-alpine
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: pruebas_web
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456789
+    volumes:
+      - ./db-data:/var/lib/postgresql
+    networks:
+      - red-biomedica
+    ports:
+      - "5432:5432"
+
+  # Backend Django
+  backend:
+    build: ./backend
+    container_name: django-app
+    environment:
+      - DATABASE_URL=postgres://postgres:123456789@db:5432/pruebas_web
+      - FASTAPI_URL_SALIVA=http://micro-saliva:8000
+      - FASTAPI_URL_SANGRE=http://micro-sangre:8000
+    volumes:
+      - ./backend:/app
+      - ./backend/media:/app/media
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - red-biomedica
+    restart: on-failure
+
+  # Microservicio Saliva
+  micro-saliva:
+    build: ./micro-saliva # Ruta a la carpeta del microservicio
+    container_name: micro-saliva
+    networks:
+      - red-biomedica
+    # No exponemos puertos al exterior si no es necesario, Django lo ve internamente
+
+  # Microservicio Sangre
+  micro-sangre:
+    build: ./micro-sangre # Ruta a la carpeta del microservicio
+    container_name: micro-sangre
+    networks:
+      - red-biomedica
+
+  # Frontend Vue.js (Vite)
+  frontend:
+    build: ./frontend
+    container_name: vue-app
+    volumes:
+      - ./frontend:/app
+      # Este volumen es importante para que los node_modules de Linux no choquen con Windows
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - red-biomedica
+
+networks:
+  red-biomedica:
+    driver: bridge
+
+volumes:
+  postgres_data:

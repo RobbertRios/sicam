@@ -1,0 +1,24 @@
+FROM python:3.10-slim
+
+# Instalamos dependencias de sistema necesarias para OpenCV, scikit-image y compilación básica
+RUN apt-get update && apt-get install -y \
+    libglib2.0-0 \
+    libgl1 \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+# Instalamos las librerías (esto tardará un poco por Torch)
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Pre-descargamos el checkpoint 'cyto3' de Cellpose durante el build,
+# para que el contenedor no dependa de internet en producción y el
+# primer request no tarde en descargar el modelo.
+RUN python -c "from cellpose import models; models.CellposeModel(pretrained_model='cyto3', gpu=False)"
+
+COPY . .
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

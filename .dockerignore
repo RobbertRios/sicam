@@ -1,0 +1,13 @@
+# Ignorar carpetas de datos (se manejarán por volúmenes)
+backend/media/
+backend/muestras/
+backend/mascaras/
+
+# Ignorar basura técnica
+**/__pycache__/
+*.pyc
+venv/
+.git/
+node_modules/
+*.npy
+*.sqlite3
