@@ -12,9 +12,9 @@ import scipy.ndimage as ndi
 from cellpose import models
 
 # Optimizacion de recursos de hardware para evitar bloqueos de memoria
-os.environ.setdefault("OMP_NUM_THREADS", "1")
-os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
-os.environ.setdefault("MKL_NUM_THREADS", "1")
+# os.environ.setdefault("OMP_NUM_THREADS", "1")
+# os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
+# os.environ.setdefault("MKL_NUM_THREADS", "1")
 
 # Supresion de advertencias no criticas de Cellpose
 logging.getLogger("cellpose").setLevel(logging.ERROR)
